@@ -35,7 +35,7 @@ RUN wget -q ${STASH_URL} \
     && chown -R ${STASH_USER}:${STASH_GROUP} current/temp \
     && chown -R ${STASH_USER}:${STASH_GROUP} current/work
 
-USER ${STASH_USER}
 WORKDIR ${STASH_INSTALL_DIR}/current/bin
 EXPOSE 7990
-CMD ./start-stash.sh -fg
+CMD chown -R ${STASH_USER}:${STASH_GROUP} ${STASH_HOME} \
+    && su ${STASH_USER} -c "./start-stash.sh -fg"
