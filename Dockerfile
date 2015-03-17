@@ -25,8 +25,9 @@ RUN mkdir -p ${ATLASSIAN_HOME} \
     && mkdir -p ${STASH_INSTALL_DIR} \
     && chown -R ${STASH_USER}:${STASH_GROUP} ${STASH_INSTALL_DIR}
 
-WORKDIR ${STASH_INSTALL_DIR}
 USER ${STASH_USER}
+
+WORKDIR ${STASH_INSTALL_DIR}
 RUN wget -q ${STASH_URL} \
     && echo ${STASH_CHECKSUM} ${STASH_TARBALL} | sha256sum -c - \
     && tar zxf ${STASH_TARBALL} \
