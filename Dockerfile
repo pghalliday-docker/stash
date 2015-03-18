@@ -21,7 +21,7 @@ RUN apt-get update \
 
 RUN mkdir -p ${ATLASSIAN_HOME} \
     && groupadd -r ${STASH_GROUP} \
-    && useradd -r -m -g ${STASH_GROUP} -d ${STASH_HOME} ${STASH_USER} \
+    && useradd -r -g ${STASH_GROUP} -d ${STASH_HOME} ${STASH_USER} \
     && mkdir -p ${STASH_INSTALL_DIR}
 
 WORKDIR ${STASH_INSTALL_DIR}
@@ -36,6 +36,7 @@ RUN wget -q ${STASH_URL} \
 
 COPY stash-server.xml /
 COPY docker-entrypoint.sh /
+VOLUME ${STASH_HOME}
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 WORKDIR ${STASH_INSTALL_DIR}/current/bin

@@ -17,3 +17,10 @@ Map the following volume to persist stash data
 ```
 /var/atlassian/application-data/stash 
 ```
+
+Set the following environment variables to configure the server
+
+```
+STASH_PROXY_NAME - the host name if using a reverse proxy
+STASH_PROXY_PORT - the port if using a reverse proxy
+```
