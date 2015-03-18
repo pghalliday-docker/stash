@@ -40,4 +40,5 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 
 WORKDIR ${STASH_INSTALL_DIR}/current/bin
 EXPOSE 7990
+EXPOSE 7999
 CMD ./start-stash.sh -fg
