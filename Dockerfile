@@ -22,8 +22,7 @@ RUN apt-get update \
 RUN mkdir -p ${ATLASSIAN_HOME} \
     && groupadd -r ${STASH_GROUP} \
     && useradd -r -m -g ${STASH_GROUP} -d ${STASH_HOME} ${STASH_USER} \
-    && mkdir -p ${STASH_INSTALL_DIR} \
-    && chown -R ${STASH_USER}:${STASH_GROUP} ${STASH_INSTALL_DIR}
+    && mkdir -p ${STASH_INSTALL_DIR}
 
 WORKDIR ${STASH_INSTALL_DIR}
 RUN wget -q ${STASH_URL} \
@@ -35,7 +34,10 @@ RUN wget -q ${STASH_URL} \
     && chown -R ${STASH_USER}:${STASH_GROUP} current/temp \
     && chown -R ${STASH_USER}:${STASH_GROUP} current/work
 
+COPY stash-server.xml /
+COPY docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
 WORKDIR ${STASH_INSTALL_DIR}/current/bin
 EXPOSE 7990
-CMD chown -R ${STASH_USER}:${STASH_GROUP} ${STASH_HOME} \
-    && su ${STASH_USER} -c "./start-stash.sh -fg"
+CMD ./start-stash.sh -fg
